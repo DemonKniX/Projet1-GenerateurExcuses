@@ -1,0 +1,95 @@
+<html lang="fr">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="icon.png">
+	<link rel="stylesheet" href="style.css" />
+
+	<link rel="stylesheet" href="https://pyscript.net/releases/2024.10.1/core.css">
+
+	<!-- This script tag bootstraps PyScript -->
+	<script type="module" src="https://pyscript.net/releases/2024.10.1/core.js"></script>
+
+	<title>Générateur d'Excuses</title>
+</head>
+
+<body>
+	<py-script>
+		from random import *
+		from pyscript import document
+
+		def Generateur(event):
+		Excuse = []
+		Type_Sujet = Liste_Sujet[randint(0, 3)]
+		Type_Adjectif = Liste_Adjectif[randint(0, 2)]
+		Sujet_Exc = Type_Sujet[randint(0, len(Type_Sujet)-1)]
+		Verbe_Exc = Liste_Verbe[randint(0, len(Liste_Verbe)-1)].lower()
+		Adjectif_Sujet = (Type_Adjectif[randint(0, len(Type_Adjectif)-1)])
+		Excuse.append(Sujet_Exc)
+
+		# Si le sujet est "devoir"
+		if Type_Sujet == Liste_Sujet[0]:
+		Excuse.append(Verbe_Exc)
+		Excuse.append("par")
+		Complement_Exc = Liste_Sujet[randint(1,3)]
+		Complement_Exc = Complement_Exc[randint(0, len(Complement_Exc)-1)]
+		Excuse.append(Complement_Exc)
+
+		#Reste
+		else:
+		# Si le sujet est au pluriel
+		if Type_Sujet == Liste_Sujet[3]:
+		if randint(1,2) == 1:
+		if Type_Adjectif == Liste_Adjectif[1] or Type_Adjectif == Liste_Adjectif[2]:
+		Adjectif_Sujet += "s"
+		Excuse.append(Adjectif_Sujet)
+		Excuse.append("ont")
+
+		# Si le sujet est au feminin
+		elif Type_Sujet == Liste_Sujet[2]:
+		if randint(1,2) == 1:
+		if Type_Adjectif == Liste_Adjectif[1]:
+		Adjectif_Sujet += "s"
+		elif Type_Adjectif == Liste_Adjectif[2]:
+		Adjectif_Sujet += "es"
+		Excuse.append(Adjectif_Sujet)
+		Excuse.append("a")
+
+		# Si le sujet est au masculin
+		elif Type_Sujet == Liste_Sujet[1]:
+		if randint(1,2) == 1:
+		Excuse.append(Adjectif_Sujet)
+		Excuse.append("a")
+
+		# Ajout du verbe et "mon devoir"
+		Excuse.append(Verbe_Exc)
+		Excuse.append("mon devoir")
+
+		# TRANSFORMATION DE LA LIST EN STRING
+		Excuse = " ".join(Excuse)
+		Excuse = Excuse + "."
+		output_div = document.querySelector("#output")
+		output_div.innerText = Excuse
+	</py-script>
+	<div class="contenu">
+		<h1>Générateur d'excuses</h1>
+		<p>Vous avez perdu (ou pas fait) votre devoir ? <br>
+			Pas de problème ! On vous fournis une excuse <strong>100% CRÉDIBLE</strong>* !
+		<p class="petitelignequepersonnenelit">*D'après une étude sérieuse menée par Jean-Pierre Patouillon, habitant de
+			Tournan-en-Brie
+		</p>
+		<div class="generateur">
+			<button py-click="Generateur">Générer une excuse</button>
+		</div>
+		<div id="output"></div>
+	</div>
+
+	<div class="contenu" id="bas_de_page">
+		<p>Projet réalisé par Alban Cottarel, Timéo Buchy et Gabriel Janicaud en 1ère NSI</p>
+	</div>
+
+	<div class="bloc_noir"></div>
+</body>
+
+</html>
